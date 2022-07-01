@@ -3,10 +3,10 @@ package com.example.employeesrestapi.model;
 import lombok.*;
 import org.hibernate.Hibernate;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Past;
 import java.time.LocalDate;
 import java.util.Objects;
 
@@ -21,11 +21,16 @@ import java.util.Objects;
 public class Employee {
     @Id
     @Column(name = "emp_no")
-    private Integer id;
+    private Integer EmployeeNo;
+    @Past
     private LocalDate birthDate;
+    @NotBlank
     private String firstName;
+    @NotBlank
     private String lastName;
+    @Enumerated(EnumType.STRING)
     private Gender gender;
+    @NotNull
     private LocalDate hireDate;
 
     @Override
@@ -33,7 +38,7 @@ public class Employee {
         if (this == o) return true;
         if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
         Employee employee = (Employee) o;
-        return id != null && Objects.equals(id, employee.id);
+        return EmployeeNo != null && Objects.equals(EmployeeNo, employee.EmployeeNo);
     }
 
     @Override
