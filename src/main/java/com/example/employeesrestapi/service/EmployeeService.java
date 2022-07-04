@@ -18,11 +18,12 @@ public class EmployeeService {
     private final EmployeeRepository employeeRepository;
 
     public Employee addEmployee(Employee employee) {
+        employee.setEmployeeNo(getCurrentIdNumber());
         return employeeRepository.save(employee);
     }
 
     private Integer getCurrentIdNumber() {
-        Optional<Employee> optionalEmployee = employeeRepository.findTopByEmployeeNoDesc();
+        Optional<Employee> optionalEmployee = employeeRepository.findTopByOrderByEmployeeNoDesc();
         if (optionalEmployee.isEmpty()) {
             return 10001;
         }
@@ -35,6 +36,10 @@ public class EmployeeService {
 
     public Employee deleteEmployeeById(Integer id) {
         Optional<Employee> optionalEmployee = employeeRepository.findById(id);
-        return optionalEmployee.orElseThrow(() -> new ResponseStatusException(HttpStatus.NOT_FOUND));
+        if (optionalEmployee.isEmpty()) {
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND);
+        }
+        employeeRepository.deleteById(id);
+        return optionalEmployee.get();
     }
 }

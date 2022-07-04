@@ -11,7 +11,6 @@ import java.util.Objects;
 @Getter
 @Setter
 @ToString
-@RequiredArgsConstructor
 @NoArgsConstructor
 @AllArgsConstructor
 @Table(name = "titles")
@@ -21,7 +20,7 @@ public class Title {
     @Id
     @ManyToOne(optional = false)
     @JoinColumn(name = "emp_no", nullable = false)
-    private Employee employeeNumber;
+    private Employee employeeNo;
     @Id
     private String title;
     @Id
@@ -33,13 +32,13 @@ public class Title {
         if (this == o) return true;
         if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
         Title title1 = (Title) o;
-        return employeeNumber != null && Objects.equals(employeeNumber, title1.employeeNumber)
+        return employeeNo != null && Objects.equals(employeeNo, title1.employeeNo)
                 && title != null && Objects.equals(title, title1.title)
                 && fromDate != null && Objects.equals(fromDate, title1.fromDate);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(employeeNumber, title, fromDate);
+        return Objects.hash(employeeNo, title, fromDate);
     }
 }

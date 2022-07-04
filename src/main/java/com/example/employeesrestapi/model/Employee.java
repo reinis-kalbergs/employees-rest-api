@@ -1,6 +1,9 @@
 package com.example.employeesrestapi.model;
 
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.Hibernate;
 
 import javax.persistence.*;
@@ -11,17 +14,15 @@ import java.time.LocalDate;
 import java.util.Objects;
 
 @Entity
-@Getter
-@Setter
-@ToString
-@RequiredArgsConstructor
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Table(name = "employees")
+@Builder(toBuilder = true)
 public class Employee {
     @Id
     @Column(name = "emp_no")
-    private Integer EmployeeNo;
+    private Integer employeeNo;
     @Past
     private LocalDate birthDate;
     @NotBlank
@@ -38,7 +39,7 @@ public class Employee {
         if (this == o) return true;
         if (o == null || Hibernate.getClass(this) != Hibernate.getClass(o)) return false;
         Employee employee = (Employee) o;
-        return EmployeeNo != null && Objects.equals(EmployeeNo, employee.EmployeeNo);
+        return employeeNo != null && Objects.equals(employeeNo, employee.employeeNo);
     }
 
     @Override
