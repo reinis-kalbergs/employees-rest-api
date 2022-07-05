@@ -5,6 +5,7 @@ import com.example.employeesrestapi.model.Gender;
 import com.example.employeesrestapi.service.EmployeesService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -41,7 +42,7 @@ public class EmployeesController {
 
     @GetMapping("/filterByHireDate/before")
     public Page<Employee> filterEmployeesByHireDateBefore(
-            @RequestParam LocalDate hireDate,
+            @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate hireDate,
             @RequestParam(defaultValue = "0") Integer page,
             @RequestParam(defaultValue = "50") Integer pageSize
     ) {
@@ -50,7 +51,7 @@ public class EmployeesController {
 
     @GetMapping("/filterByHireDate/after")
     public Page<Employee> filterEmployeesByHireDateAfter(
-            @RequestParam LocalDate hireDate,
+            @RequestParam @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate hireDate,
             @RequestParam(defaultValue = "0") Integer page,
             @RequestParam(defaultValue = "50") Integer pageSize
     ) {

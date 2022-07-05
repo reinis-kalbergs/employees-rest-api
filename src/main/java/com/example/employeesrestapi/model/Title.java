@@ -18,8 +18,8 @@ import java.util.Objects;
 @IdClass(TitleKey.class)
 public class Title {
     @Id
-    @ManyToOne(optional = false)
-    @JoinColumn(name = "emp_no", nullable = false)
+    @ManyToOne
+    @JoinColumn(name = "emp_no", referencedColumnName = "emp_no", nullable = false)
     private Employee employeeNo;
     @Id
     private String title;

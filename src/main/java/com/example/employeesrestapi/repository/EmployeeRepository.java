@@ -29,7 +29,7 @@ public interface EmployeeRepository extends JpaRepository<Employee, Integer> {
 
     @Query("SELECT e FROM Employee e JOIN Title t on t.employeeNo = e "
             + "WHERE ("
-            + "(t.title LIKE :titleName) AND :hireDate > e.hireDate "
+            + "(t.title LIKE :titleName) AND :hireDate < e.hireDate "
             + "AND (:gender IS null OR :gender LIKE e.gender)"
             + ")"
     )
@@ -37,7 +37,7 @@ public interface EmployeeRepository extends JpaRepository<Employee, Integer> {
 
     @Query("SELECT e FROM Employee e JOIN Title t on t.employeeNo = e "
             + "WHERE ("
-            + "(t.title LIKE :titleName) AND :hireDate < e.hireDate "
+            + "(t.title LIKE :titleName) AND :hireDate > e.hireDate "
             + "AND (:gender IS null OR :gender LIKE e.gender)"
             + ")"
     )
@@ -46,7 +46,7 @@ public interface EmployeeRepository extends JpaRepository<Employee, Integer> {
     @Query("SELECT e FROM Employee e JOIN Title t on t.employeeNo = e "
             + "WHERE ("
             + "(t.title LIKE :titleName) "
-            + "AND :hireDateAfter > e.hireDate AND :hireDateBefore < e.hireDate "
+            + "AND :hireDateAfter < e.hireDate AND :hireDateBefore > e.hireDate "
             + "AND (:gender IS null OR :gender LIKE e.gender)"
             + ")"
     )

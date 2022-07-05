@@ -6,6 +6,7 @@ import com.example.employeesrestapi.service.TitleService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Sort;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -34,8 +35,8 @@ public class TitleController {
     public Page<Employee> getAllEmployeesByTitle(
             @PathVariable String title,
             @RequestParam(required = false) Gender gender,
-            @RequestParam(required = false) LocalDate hireDateBefore,
-            @RequestParam(required = false) LocalDate hireDateAfter,
+            @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate hireDateBefore,
+            @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd") LocalDate hireDateAfter,
             @RequestParam(defaultValue = "0") Integer page,
             @RequestParam(defaultValue = "50") Integer pageSize,
             @RequestParam(defaultValue = "ASC") Sort.Direction order,
