@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
 import java.time.LocalDate;
-import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
@@ -22,6 +21,7 @@ import java.util.List;
 public class EmployeesController {
 
     private final EmployeesService employeesService;
+    private final EmployeeSortByVerifier employeeSortByVerifier;
 
     @GetMapping("/all")
     public Page<Employee> getAllEmployees(
@@ -65,10 +65,7 @@ public class EmployeesController {
             @RequestParam(defaultValue = "0") Integer page,
             @RequestParam(defaultValue = "50") Integer pageSize
     ) {
-        final List<String> ORDERED_BY = List.of(new String[]{"lastName", "firstName", "hireDate"});
-        if (!ORDERED_BY.contains(by)) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Can only be ordered by" + ORDERED_BY);
-        }
+        employeeSortByVerifier.verify(by);
         if (!(order.equalsIgnoreCase("asc") || order.equalsIgnoreCase("desc"))) {
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Can only be ordered in 'asc' or 'desc'");
         }

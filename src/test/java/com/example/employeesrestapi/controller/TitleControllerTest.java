@@ -9,6 +9,7 @@ import org.junit.jupiter.params.provider.ValueSource;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.Mockito;
+import org.mockito.Spy;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
@@ -22,6 +23,9 @@ public class TitleControllerTest {
 
     @Mock
     TitleService titleService;
+
+    @Spy
+    EmployeeSortByVerifier employeeSortByVerifier;
 
     @ParameterizedTest
     @ValueSource(strings = {"", "ascending", "abc"})
@@ -40,7 +44,7 @@ public class TitleControllerTest {
     }
 
     @Test
-    void shouldThrowWhenSortingColumn() {
+    void shouldThrowWhenSortingColumnByWrongSort() {
         ResponseStatusException exception = Assertions.assertThrows(ResponseStatusException.class, () ->
                 titleController.getAllEmployeesByTitle(null, null, null, null, 0, 50, Sort.Direction.ASC, "something")
         );

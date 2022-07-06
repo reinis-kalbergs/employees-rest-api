@@ -12,6 +12,6 @@ import java.io.Serializable;
 @NoArgsConstructor
 @AllArgsConstructor
 public class DepartmentEmployeeKey implements Serializable {
-    private Department department;
-    private Employee employee;
+    private Department department; // String id;
+    private Employee employee; // Integer employeeNo;
 }

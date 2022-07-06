@@ -22,6 +22,7 @@ import java.util.List;
 public class TitleController {
 
     private final TitleService titleService;
+    private final EmployeeSortByVerifier employeeSortByVerifier;
 
     @GetMapping("/titles")
     public List<String> getAllDistinctTitles(@RequestParam(defaultValue = "asc") String order) {
@@ -42,10 +43,7 @@ public class TitleController {
             @RequestParam(defaultValue = "ASC") Sort.Direction order,
             @RequestParam(defaultValue = "lastName") String orderBy
     ) {
-        final List<String> POSSIBLE_TO_ORDER_BY = List.of(new String[]{"lastName", "firstName", "hireDate"});
-        if (!POSSIBLE_TO_ORDER_BY.contains(orderBy)) {
-            throw new ResponseStatusException(HttpStatus.BAD_REQUEST, "Can only be ordered by" + POSSIBLE_TO_ORDER_BY);
-        }
+        employeeSortByVerifier.verify(orderBy);
         return titleService.findAllEmployeesByTitle(title, gender, hireDateBefore, hireDateAfter, page, pageSize, order, orderBy);
     }
 }
