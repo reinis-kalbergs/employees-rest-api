@@ -1,6 +1,5 @@
 package com.example.employeesrestapi.model.compositekey;
 
-import com.example.employeesrestapi.model.Employee;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -12,7 +11,7 @@ import java.time.LocalDate;
 @NoArgsConstructor
 @AllArgsConstructor
 public class TitleKey implements Serializable {
-    private Employee employeeNo;
+    private Integer employeeNo;
     private String title;
     private LocalDate fromDate;
 }
