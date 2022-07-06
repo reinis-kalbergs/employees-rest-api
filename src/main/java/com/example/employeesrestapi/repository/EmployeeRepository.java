@@ -51,4 +51,25 @@ public interface EmployeeRepository extends JpaRepository<Employee, Integer> {
             + ")"
     )
     Page<Employee> findAllEmployeesByTitleAndHireDateBeforeAndAfter(String titleName, Gender gender, LocalDate hireDateBefore, LocalDate hireDateAfter, Pageable pageable);
+
+    //DepartmentService
+    @Query("SELECT e FROM Employee e JOIN DepartmentEmployee de on  de.employee = e JOIN Department d on d.id = de.department "
+            + "WHERE ((d.id LIKE :department) AND (:gender is NULL or :gender LIKE e.gender))")
+    Page<Employee> findAllEmployeesByDepartment(String department, Gender gender, Pageable pageable);
+
+    @Query("SELECT e FROM Employee e JOIN DepartmentEmployee de on  de.employee = e JOIN Department d on d.id = de.department "
+            + "WHERE ((d.id LIKE :department) AND :hireDate < e.hireDate "
+            + "AND (:gender is NULL or :gender LIKE e.gender))")
+    Page<Employee> findAllEmployeesByDepartmentAndHireDateAfter(String department, Gender gender, LocalDate hireDate, Pageable pageable);
+
+    @Query("SELECT e FROM Employee e JOIN DepartmentEmployee de on  de.employee = e JOIN Department d on d.id = de.department "
+            + "WHERE ((d.id LIKE :department) AND :hireDate > e.hireDate "
+            + "AND (:gender is NULL or :gender LIKE e.gender))")
+    Page<Employee> findAllEmployeesByDepartmentAndHireDateBefore(String department, Gender gender, LocalDate hireDate, Pageable pageable);
+
+    @Query("SELECT e FROM Employee e JOIN DepartmentEmployee de on  de.employee = e JOIN Department d on d.id = de.department "
+            + "WHERE ((d.id LIKE :department) "
+            + "AND :hireDateAfter < e.hireDate AND :hireDateBefore > e.hireDate "
+            + "AND (:gender is NULL or :gender LIKE e.gender))")
+    Page<Employee> findAllEmployeesByDepartmentAndHireDateBeforeAndAfter(String department, Gender gender, LocalDate hireDateBefore, LocalDate hireDateAfter, Pageable pageable);
 }
